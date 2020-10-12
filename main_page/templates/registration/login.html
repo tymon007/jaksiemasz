@@ -1,0 +1,54 @@
+{% extends "general/index.html" %}
+
+{% block title %}<title>Log in</title>{% endblock %}
+
+{% block content %}
+<div class="container-for-log-in">
+    <div class="attampt">
+        {% if errors %}
+        {% for error in errors %}
+        <p class="alert alert-danger">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+        {% if data %}
+        {% for element in data %}
+        <p class="alert alert-danger">{{ element }}</p>
+        {% endfor %}
+        {% endif %}
+        <form action="{% url 'auth_login' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group input-group-lg mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Username</span>
+                </div>
+
+                <input class="form-control" name="username" placeholder="" required type="text">
+            </div>
+
+            <div class="input-group input-group-lg mb-3" id="show_hide_password">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Password</span>
+                </div>
+
+                <input class="form-control" name="password" placeholder="" required type="password">
+
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <a href=""><i aria-hidden="true" class="fa fa-eye-slash"></i></a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="text-align-center">
+                <div class="inline-block">
+                    <input class="btn btn-success" name="Create" type="submit" value="Log in">
+
+                    <button class="btn btn-danger" id="cancel-log-in" type="button">Cancel</button>
+
+                    <a href="/"></a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

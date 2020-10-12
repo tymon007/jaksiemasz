@@ -1,0 +1,77 @@
+{% extends 'general/index.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>dummy3</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/m_cropper.css' %}" charset="UTF-8">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="alert alert-warning">
+        (placeholder)
+    </div>
+
+    <form action="{% url 'power_addValue' %}" method="POST" enctype="multipa  rt/form-data">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Zdjęcie licznika</span>
+            </div>
+
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+
+                <label class="custom-file-label" for="inputGroupFile01">Wybierz zdjęcie</label>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Ew. wpisanie danych</span>
+            </div>
+
+            <input type="number" class="form-control" name="value" id="basic-url" aria-describedby="basic-addon3" required>
+
+            <div class="input-group-append">
+                <span class="input-group-text" id="">kWh</span>
+            </div>
+        </div>
+
+        <div class="text-align-center">
+            <div class="inline-block">
+                <input type="submit" name="Create" value="Wyślij dane" class="btn btn-success">
+
+                <button type="button" class="btn btn-danger" id="cancel">Anuluj</button>
+
+                <a href="{% url 'main_page'%}"></a>
+            </div>
+        </div>
+    </form>
+
+    <div class="input">
+        <button class="btn btn-primary" id="btn_load_image">Upload</button>
+        <button class="btn btn-info" id="crop_loaded_image">Crop</button>
+    </div>
+
+    <div>
+        <img id="image" src="">
+    </div>
+
+    <div id="output"></div>
+
+    <form action="/power/cropAddValue/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file_image" id="file_load_image">
+        <input type="hidden" name="data" value="" id="hidden-data">
+        <input type="submit" name="send" value="success" class="display-none" id="send-data">
+    </form>
+
+    {% if result %}
+    <div class="alert alert-info">{{ result }}</div>
+    {% endif %}
+
+    <script src="{% static 'js/m_cropper.js' %}"></script>
+</div>
+{% endblock %}
