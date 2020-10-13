@@ -16,7 +16,7 @@
     <link charset="UTF-8" href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
 
     <!-- icon -->
-    <link href="{% static 'images/logo_placeholder.ico' %}" rel="icon" sizes="16x16" type="image/ico">
+    <link href="{% static 'images/logo_icon.ico' %}" rel="icon" sizes="16x16" type="image/ico">
 
     <!-- scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -30,7 +30,7 @@
     {% if is_logged_key %}
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" data-help="TO_HOME_PAGE" href="{% url 'main_page' %}">
-            <img src="{% static 'images/logo_placeholder.png' %}" width="50">
+            <img src="{% static 'images/logo.png' %}" width="50">
         </a>
 
         <button class="btn bg-light">Nazwa</button>
@@ -61,10 +61,6 @@
                     <div class="cell btn btn-outline-dark">
                         <a href="{% url 'me' %}">Moje dane</a>
                     </div>
-
-                    <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'timer' %}">Czasomierz</a>
-                    </div>
                 </div>
 
                 <div class="prelog-alog">
@@ -73,7 +69,7 @@
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy2</a>
+                        <a href="{% url 'porady' %}">Porady</a>
                     </div>
                 </div>
 
