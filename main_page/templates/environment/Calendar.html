@@ -1,0 +1,33 @@
+{% extends 'general/index.html' %}
+{% block title %}<title>Calendar</title>{% endblock %}
+{% block content %}
+
+  	<div class="my-3 container">
+		<div style="text-align: center;">
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#samopoczucieModal">
+				Jak się masz?
+			</button>
+		</div>
+	</div>
+	<!-- samopoczucieModal -->
+	<div class="modal" id="samopoczucieModal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header"\>
+					<h3>Jak się masz?</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col"><input type="image" src="{% static 'images/mood1.png' %}" name="mood" value="1" width="48" height="48"></div>
+						<div class="col"><input type="image" src="{% static 'images/mood2.png' %}" name="mood" value="2" width="48" height="48"></div>
+						<div class="col"><input type="image" src="{% static 'images/mood3.png' %}" name="mood" value="3" width="48" height="48"></div>
+						<div class="col"><input type="image" src="{% static 'images/mood4.png' %}" name="mood" value="4" width="48" height="48"></div>
+						<div class="col"><input type="image" src="{% static 'images/mood5.png' %}" name="mood" value="5" width="48" height="48"></div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
