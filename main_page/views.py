@@ -169,17 +169,6 @@ def me(request):
         return redirect('log_out')
 
 
-def timer(request):
-    # checking if user logged in
-    is_logged = request.session.get('is_logged', False)
-    if is_logged:
-        return render(request, 'aboutMe/timer.html', context={
-            'is_logged_key': True
-        })
-    else:
-        return redirect('log_out')
-
-
 def credits(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
