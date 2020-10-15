@@ -12,5 +12,6 @@ urlpatterns = [
     re_path(r'^me/$',                 views.me,                 name="me"),
     re_path(r'^porady/$',             views.porady,             name="porady"),
     re_path(r'^credits/$',            views.credits,            name="credits"),
-    re_path(r'^.*$',                  views.http_not_found,     name="not_found"),
+    re_path(r'^lekarze/$',            views.lekarze,            name="lekarze"),
+    re_path(r'^.*$',                  views.http_not_found,     name="not_found")
 ]
