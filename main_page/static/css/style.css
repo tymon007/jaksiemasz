@@ -1,21 +1,11 @@
 @font-face {
-    font-family: "Castellar";
-    src: url("/static/font-families/Castellar.ttf");
-}
-
-@font-face {
-    font-family: "Constania";
-    src: url("/static/font-families/Constania.ttf");
-}
-
-@font-face {
-    font-family: "Pompadur";
-    src: url("/static/font-families/Pompadur.ttf");
+    font-family: "Muli";
+    src: url("/static/font-families/Muli-Regular.ttf");
 }
 
 * {
     text-decoration: none;
-    font-family: Constania;
+    font-family: Muli;
 }
 
 .display-none {
@@ -25,7 +15,7 @@
 body {
     height: 100vh;
     position: relative;
-    font-family: sans-serif;
+    font-family: Muli;
     color: #212529;
     background-color: rgb(240, 240, 240);
 }
@@ -61,22 +51,19 @@ body {
 }
 
 .main_content p {
-    font-style: italic;
     font-variant: small-caps;
     font-weight: 500;
     font-size: 20px;
     line-height: 1.5;
-    /* font-family: Constania; */
-    /* color: blue; */
+    font-family: Muli;
 }
 
 .tag-eco-baza {
-    font-style: normal;
     font-variant: small-caps;
     font-weight: 700;
     font-size: 23px;
     line-height: 1;
-    /* font-family: Constania; */
+    font-family: Muli;
     color: rgb(40, 218, 40);
 }
 
