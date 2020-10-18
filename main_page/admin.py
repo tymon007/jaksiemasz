@@ -12,5 +12,5 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_id', 'content', 'well_being', 'date', 'icon')
-    fields = ['id', 'user_id', 'content', 'well_being', 'date', 'icon']
+    list_display = ('id', 'user_id', 'content', 'well_being', 'food', 'date', 'icon')
+    fields = ['id', 'user_id', 'content', 'well_being', 'food', 'date', 'icon']
