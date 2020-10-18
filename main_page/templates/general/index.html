@@ -34,7 +34,7 @@
             <img src="{% static 'images/logo.png' %}" width="50">
         </a>
 
-        <button class="btn bg-light">Nazwa</button>
+        <button class="btn bg-light">Jak się masz?</button>
 
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
@@ -48,7 +48,7 @@
             <img src="{% static 'images/logo_placeholder.png' %}" width="50">
         </a>
 
-        <button class="btn bg-light">Nazwa</button>
+        <button class="btn bg-light">Jak się masz?</button>
 
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
@@ -60,47 +60,41 @@
                 {% if is_logged_key %}
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'me' %}">Moje dane</a>
+                        <a href="{% url 'me' %}">Dane konta</a>
                     </div>
                 </div>
 
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy1</a>
+                        <a href="">Dziennik</a>
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy2</a>
+                        <a href="">Wykresy</a>
+                    </div>
+                </div>
+                    <div class="cell btn btn-outline-dark">
+                        <a href="">Porady i Pomoc</a>
                     </div>
                 </div>
 
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy3</a>
+                        <a href="{% url 'credits' %}">Drużyna "Jak się masz?"</a>
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy4</a>
-                    </div>
-                </div>
-
-                <div class="prelog-alog">
-                    <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'credits' %}">O nas</a>
-                    </div>
-
-                    <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'logout' %}">Wyloguj</a>
+                        <a href="{% url 'logout' %}">Wyloguj się</a>
                     </div>
                 </div>
                 {% else %}
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'sign_in' %}">Zarejestruj</a>
+                        <a href="{% url 'sign_in' %}">Zarejestruj się</a>
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'log_in' %}">Zaloguj</a>
+                        <a href="{% url 'log_in' %}">Zaloguj się</a>
                     </div>
                 </div>
                 {% endif %}
