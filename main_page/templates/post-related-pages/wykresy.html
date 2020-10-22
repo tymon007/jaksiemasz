@@ -1,0 +1,28 @@
+{% extends 'general/index.html' %}
+
+{% load static %}
+
+{% block title %}<title>Title</title>{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% for post in posts %}
+    <p>
+    <h1>Post #{{ post.id }}</h1>
+    <p>Post Id: <strong>{{ post.id }}</strong></p>
+    <p>Post User Id: <strong>{{ post.user_id }}</strong></p>
+    <p style="word-wrap: break-word">Post Content: <strong>{{ post.content }}</strong></p>
+    <p>Post Well-Being: <strong>{{ post.well_being }}</strong></p>
+    <p>Post Food: <strong>{{ post.food }}</strong></p>
+    <p>Post Date: <strong>{{ post.date }}</strong></p>
+    <p>Post Icon: <strong>{{ post.icon }}</strong></p>
+    </p>
+    {% endfor %}
+
+    {{ user_id }}
+
+    {{ chart_name }}
+
+    <img src="{% static static_chart_name %}" style="display: block; margin: 0 auto" width="300px">
+</div>
+{% endblock %}
