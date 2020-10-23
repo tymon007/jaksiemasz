@@ -16,7 +16,7 @@ body {
     height: 100vh;
     position: relative;
     font-family: Muli;
-    color: #212529;
+    color: #4c96d7;
     background-color: rgb(240, 240, 240);
 }
 
@@ -64,7 +64,7 @@ body {
     font-size: 23px;
     line-height: 1;
     font-family: Muli;
-    color: rgb(40, 218, 40);
+    color: #4c96d7;
 }
 
 .color-red {
