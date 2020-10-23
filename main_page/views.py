@@ -4,12 +4,12 @@ import re
 import string
 import uuid
 
-from django.shortcuts import render, redirect
 import matplotlib
+from django.shortcuts import render, redirect
+
 matplotlib.use('Agg')
 from matplotlib import dates as mpl_dates
 from matplotlib import pyplot as plt
-from datetime import datetime
 
 from .models import User, Post
 
@@ -180,17 +180,30 @@ def me(request):
     else:
         return redirect('log_out')
 
+
 def porady(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
     if is_logged:
-        return render(request, 'porady.html', context={
+        return render(request, 'environment/porady.html', context={
             'is_logged_key': True
         })
     else:
         return redirect('log_out')
 
+
 def credits(request):
+    # checking if user logged in
+    is_logged = request.session.get('is_logged', False)
+    if is_logged:
+        return render(request, 'credits.html', context={
+            'is_logged_key': True
+        })
+    else:
+        return redirect('log_out')
+
+
+def http_not_found(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
     if is_logged:
