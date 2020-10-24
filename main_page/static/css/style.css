@@ -1,11 +1,11 @@
 @font-face {
-    font-family: "Muli";
-    src: url("/static/font-families/Muli-Regular.ttf");
+    font-family: "Arial";
+    src: url("/static/font-families/ARIAL.ttf");
 }
 
 * {
     text-decoration: none;
-    font-family: Muli;
+    font-family: Arial;
 }
 
 .display-none {
@@ -15,7 +15,7 @@
 body {
     height: 100vh;
     position: relative;
-    font-family: Muli;
+    font-family: Arial;
     color: #4c96d7;
     background-color: rgb(240, 240, 240);
 }
@@ -55,7 +55,7 @@ body {
     font-weight: 500;
     font-size: 20px;
     line-height: 1.5;
-    font-family: Muli;
+    font-family: Arial;
 }
 
 .tag-eco-baza {
@@ -63,7 +63,7 @@ body {
     font-weight: 700;
     font-size: 23px;
     line-height: 1;
-    font-family: Muli;
+    font-family: Arial;
     color: #4c96d7;
 }
 
