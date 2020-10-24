@@ -225,6 +225,17 @@ def lekarze(request):
         return redirect('log_out')
 
 
+def Calendar(request):
+    # checking if user logged in
+    is_logged = request.session.get('is_logged', False)
+    if is_logged:
+        return render(request, 'environment/Calendar.html', context={
+            'is_logged_key': True
+        })
+    else:
+        return redirect('log_out')
+
+
 def wykresy(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
