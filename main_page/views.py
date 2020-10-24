@@ -243,16 +243,16 @@ def wykresy(request):
             dates.append(post.date)
             well_being.append(post.well_being)
 
-        plt.plot_date(dates, well_being, linestyle='solid', linewidth="1", marker=".", color="red")
+        plt.plot_date(dates, well_being, linestyle='solid', linewidth="1", marker=".", color="blue")
 
         plt.gcf().autofmt_xdate()
 
         date_format = mpl_dates.DateFormatter('%b, %d %Y')
         plt.gca().xaxis.set_major_formatter(date_format)
 
-        plt.title("Chart")
-        plt.xlabel("Month")
-        plt.ylabel("Well-being")
+        plt.title("Wykres samopoczucia")
+        plt.xlabel("Miesiąc")
+        plt.ylabel("Samopoczucie")
 
         plt.tight_layout()
 
