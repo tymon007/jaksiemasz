@@ -43,6 +43,12 @@
     </nav>
     {% endif %}
     <!-- menu -->
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
     <nav class="navbar navbar-expand-md navbar-dark navbar-fixed-mine" style="background-color: #4c96d7;">
         <a class="navbar-brand" data-help="TO_HOME_PAGE" href="{% url 'main_page' %}">
             <img src="{% static 'images/logo.png' %}" width="50">
@@ -74,7 +80,7 @@
                     </div>
                 </div>
                     <div class="cell btn btn-outline-dark">
-                        <a href="">Porady i Pomoc</a>
+                        <a href="{% url 'porady' %}">Porady i Pomoc</a>
                     </div>
                 </div>
 
