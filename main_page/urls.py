@@ -10,6 +10,9 @@ urlpatterns = [
     re_path(r'^auth_sign_in/$',       views.auth_sign_in,       name="auth_sign_in"),
     re_path(r'^logout/$',             views.logout,             name="log_out"),
     re_path(r'^me/$',                 views.me,                 name="me"),
+    re_path(r'^porady/$',             views.porady,             name="porady"),
     re_path(r'^credits/$',            views.credits,            name="credits"),
-    re_path(r'^.*$',                  views.http_not_found,     name="not_found"),
+    re_path(r'^lekarze/$',            views.lekarze,            name="lekarze"),
+    re_path(r'^wykresy/$',            views.wykresy,            name="wykresy"),
+    re_path(r'^.*$',                  views.http_not_found,     name="not_found")
 ]

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User
+from .models import User, Post
 
 
 # Register your models here.
@@ -8,3 +8,9 @@ from .models import User
 class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'username', 'email', 'password', 'salt')
     fields = ['id', 'username', 'email', 'password', 'salt']
+
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user_id', 'content', 'well_being', 'food', 'date', 'icon')
+    fields = ['id', 'user_id', 'content', 'well_being', 'food', 'date', 'icon']

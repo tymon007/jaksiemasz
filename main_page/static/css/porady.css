@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "Arial";
+    src: url("/static/font-families/ARIAL.ttf");
+}
+
+* {
+    text-decoration: none;
+    font-family: Arial;
+}
+
+body {
+    height: 100vh;
+    position: relative;
+    font-family: Arial;
+    color: #4c96d7;
+    background-color: rgb(240, 240, 240);
+}
+
+.main_content p {
+    font-variant: small-caps;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.5;
+    font-family: Arial;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.fa {
+    color: #495057;
+}

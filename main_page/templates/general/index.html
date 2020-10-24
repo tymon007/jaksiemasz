@@ -12,11 +12,12 @@
     {% block title %}{% endblock %}
 
     <!-- styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link charset="UTF-8" href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
 
     <!-- icon -->
-    <link href="{% static 'images/logo_placeholder.ico' %}" rel="icon" sizes="16x16" type="image/ico">
+    <link href="{% static 'images/logo_icon.ico' %}" rel="icon" sizes="16x16" type="image/ico">
 
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -28,87 +29,92 @@
 
 <body>
     {% if is_logged_key %}
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #4c96d7;">
         <a class="navbar-brand" data-help="TO_HOME_PAGE" href="{% url 'main_page' %}">
-            <img src="{% static 'images/logo_placeholder.png' %}" width="50">
+            <img src="{% static 'images/logo.png' %}" width="50">
         </a>
 
-        <button class="btn bg-light">Nazwa</button>
+        <button class="btn bg-light">Jak się masz?</button>
 
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
     {% endif %}
     <!-- menu -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-fixed-mine">
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <nav class="navbar navbar-expand-md navbar-dark navbar-fixed-mine" style="background-color: #4c96d7;">
         <a class="navbar-brand" data-help="TO_HOME_PAGE" href="{% url 'main_page' %}">
-            <img src="{% static 'images/logo_placeholder.png' %}" width="50">
+            <img src="{% static 'images/logo.png' %}" width="50">
         </a>
 
-        <button class="btn bg-light">Nazwa</button>
+        <button class="btn bg-light">Jak się masz?</button>
 
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="menu-block">
                 {% if is_logged_key %}
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'me' %}">Moje dane</a>
+                        <a href="{% url 'me' %}">Dane konta</a>
                     </div>
                 </div>
+            </div>
 
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy1</a>
+                        <a href="">Dziennik</a>
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy2</a>
+                        <a href="{% url 'wykresy' %}">Wykresy</a>
                     </div>
                 </div>
+                    <div class="cell btn btn-outline-dark">
+                        <a href="{% url 'porady' %}">Porady i Pomoc</a>
+                    </div>
+                </div>
+            </div>
 
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy3</a>
+                        <a href="{% url 'credits' %}">Drużyna "Jak się masz?"</a>
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="">dummy4</a>
-                    </div>
-                </div>
-
-                <div class="prelog-alog">
-                    <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'credits' %}">O nas</a>
-                    </div>
-
-                    <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'logout' %}">Wyloguj</a>
+                        <a href="{% url 'logout' %}">Wyloguj się</a>
                     </div>
                 </div>
                 {% else %}
                 <div class="prelog-alog">
                     <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'sign_in' %}">Zarejestruj</a>
+                        <a href="{% url 'sign_in' %}">Zarejestruj się</a>
                     </div>
 
                     <div class="cell btn btn-outline-dark">
-                        <a href="{% url 'log_in' %}">Zaloguj</a>
+                        <a href="{% url 'log_in' %}">Zaloguj się</a>
                     </div>
                 </div>
-                {% endif %}
             </div>
+            {% endif %}
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- content presented in page -->
     {% block content %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,10 +1,17 @@
 import hashlib
+import random
 import re
+import string
 import uuid
 
+import matplotlib
 from django.shortcuts import render, redirect
 
-from .models import User
+matplotlib.use('Agg')
+from matplotlib import dates as mpl_dates
+from matplotlib import pyplot as plt
+
+from .models import User, Post
 
 
 def md5(s, raw_output=False):
@@ -12,6 +19,12 @@ def md5(s, raw_output=False):
     if raw_output:
         return res.digest()
     return res.hexdigest()
+
+
+def get_random_string(length):
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
 
 
 def f_salt():
@@ -108,7 +121,6 @@ def auth_sign_in(request):
                         break
 
             # email validation
-            email_valid = True
             regex = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$"
             if not re.search(regex, email):
                 errors.append('Some errors detected: email is not valid')
@@ -123,7 +135,7 @@ def auth_sign_in(request):
                     if len(password1) < 5:
                         errors.append('Some errors detected: password length must be at least 5 characters')
                     else:
-                        passwords_valid = True
+                        pass
 
             if len(errors) == 0:
                 salt = f_salt()
@@ -169,6 +181,17 @@ def me(request):
         return redirect('log_out')
 
 
+def porady(request):
+    # checking if user logged in
+    is_logged = request.session.get('is_logged', False)
+    if is_logged:
+        return render(request, 'environment/porady.html', context={
+            'is_logged_key': True
+        })
+    else:
+        return redirect('log_out')
+
+
 def credits(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
@@ -186,6 +209,66 @@ def http_not_found(request):
     if is_logged:
         return render(request, '404.html', context={
             'is_logged_key': True
+        })
+    else:
+        return redirect('log_out')
+
+
+def lekarze(request):
+    # checking if user logged in
+    is_logged = request.session.get('is_logged', False)
+    if is_logged:
+        return render(request, 'lekarze.html', context={
+            'is_logged_key': True
+        })
+    else:
+        return redirect('log_out')
+
+
+def wykresy(request):
+    # checking if user logged in
+    is_logged = request.session.get('is_logged', False)
+
+    if is_logged:
+        user_id_s = request.session.get('id_user', False)
+
+        posts = Post.objects.filter(user_id=user_id_s).order_by('date')
+
+        plt.style.use('fivethirtyeight')
+
+        dates = []
+        well_being = []
+
+        for post in posts:
+            dates.append(post.date)
+            well_being.append(post.well_being)
+
+        plt.plot_date(dates, well_being, linestyle='solid', linewidth="1", marker=".", color="blue")
+
+        plt.gcf().autofmt_xdate()
+
+        date_format = mpl_dates.DateFormatter('%b, %d %Y')
+        plt.gca().xaxis.set_major_formatter(date_format)
+
+        plt.title("Wykres samopoczucia")
+        plt.xlabel("Miesiąc")
+        plt.ylabel("Samopoczucie")
+
+        plt.tight_layout()
+
+        # static_path_to_chart = ('images/auto-generated-charts/user-' + str(user_id_s) + '/well_being@'
+        #                         + datetime.now().strftime("%m-%d-%Y_%H-%M-%S") + '@' + str(uuid.uuid1()) + '.png')
+        #
+        # plt.savefig('d:/projects/Django/django_projects/skrrt/main_page/static/' + static_path_to_chart,
+        #             format="png")
+
+        static_path_to_chart = ('images/auto-generated-charts/user-2/'
+                                'well_being@10-20-2020_11-05-17@5fba488e-12b3-11eb-8711-9828a61b3b5c.png')
+
+        return render(request, 'post-related-pages/wykresy.html', context={
+            'is_logged_key': True,
+            'posts': posts,
+            'static_chart_name': static_path_to_chart
         })
     else:
         return redirect('log_out')
