@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "Arial";
+    src: url("/static/font-families/ARIAL.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    font-family: Arial;
+}
+
+body {
+    position: relative;
+    color: white;
+    background-color: rgb(52, 58, 64);
+}
+
+ul:before {
+    content: attr(aria-label);
+    font-size: 120%;
+}
+
+.-a-bit-darker {
+    background-color: rgb(102, 108, 114);
+    border-color: rgb(102, 108, 114);
+    color: white;
+}
+
+.display-none {
+    display: none;
+}
+
+.tag-app-name {
+    font-variant: small-caps;
+    font-weight: 700;
+    font-size: 1.4375rem;
+    line-height: 1;
+    color: rgb(132, 189, 240);
+}
+
+.color-red {
+    color: rgb(218, 40, 40);
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.fa {
+    color: #495057;
+}
+
+#logo-cont {
+    position: relative;
+    padding: 0;
+    width: 71px;
+    height: 71px;
+    background-color: rgb(76, 150, 215);
+    border-radius: 50%;
+}
+
+#logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.content {
+    padding: 10px;
+}
+
+/* begginig of description of content page */
+
+.container-for-log-in {
+    /* position: absolute; */
+    /* top: 60%; */
+    /* left: 0;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); */
+    margin-top: 50px;
+    padding: 10px;
+}
+
+/* end of description of content page */

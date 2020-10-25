@@ -1,0 +1,15 @@
+{% extends 'general/index.html' %}
+
+{% block title %}<title>Informacje o użytkowniku</title>{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="alert -a-bit-darker" style="font-size: 1.25rem">
+        {% if user %}
+        <p>Nazwa użytkownika: {{ user.username }}</p>
+
+        <p>E-mail: {{ user.email }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

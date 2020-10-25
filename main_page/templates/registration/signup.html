@@ -1,0 +1,70 @@
+{% extends "general/index.html" %}
+
+{% block title %}<title>Sign up</title>{% endblock %}
+
+{% block content %}
+<div class="container-for-log-in">
+    <div class="attampt">
+        {% if errors %}
+        {% for error in errors %}
+        <p class="alert alert-danger">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+        <form action="{% url 'auth_sign_in' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group input-group-lg mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text -a-bit-darker">Username</span>
+                </div>
+
+                <input class="form-control -a-bit-darker" name="username" placeholder="" autocomplete="new-password"
+                    required type="text">
+            </div>
+
+            <div class="input-group input-group-lg mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text -a-bit-darker">E-mail</span>
+                </div>
+
+                <input class="form-control -a-bit-darker" name="email" placeholder="" autocomplete="new-password"
+                    required type="email">
+            </div>
+
+            <div class="input-group input-group-lg mb-3" id="show_hide_password">
+                <div class="input-group-prepend">
+                    <span class="input-group-text -a-bit-darker">Password</span>
+                </div>
+
+                <input class="form-control -a-bit-darker" id="pass-to-hide" name="password1" placeholder=""
+                    autocomplete="new-password" required type="password">
+
+                <div class="input-group-append">
+                    <div class="input-group-text -a-bit-darker" data-hide-pass-target="pass-to-hide">Hide</div>
+                </div>
+            </div>
+
+            <div class="input-group input-group-lg mb-3" id="show_hide_repeat_password">
+                <div class="input-group-prepend">
+                    <span class="input-group-text -a-bit-darker">Repeat</span>
+                </div>
+
+                <input class="form-control -a-bit-darker" id="pass-rep-to-hide" name="password2" placeholder=""
+                    autocomplete="new-password" required type="password">
+
+                <div class="input-group-append">
+                    <span class="input-group-text -a-bit-darker" data-hide-pass-target="pass-rep-to-hide">Hide</span>
+                </div>
+            </div>
+
+            <div class="text-align-center">
+                <div class="inline-block">
+                    <input class="btn btn-outline-success" name="Create" type="submit" value="Sign up">
+
+                    <a href="{% url 'main_page' %}" class="btn btn-outline-danger" id="cancel-log-in"
+                        type="button">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
