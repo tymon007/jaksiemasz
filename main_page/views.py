@@ -298,7 +298,7 @@ def sendpostcal(request):
 
                 plt.tight_layout()
 
-                dir = os.path.join("/", "opt", "lampp", "htdocs", "main_page", "static", "images",
+                _dir = os.path.join("/", "opt", "lampp", "htdocs", "main_page", "static", "images",
                            "auto-generated-charts", "user-" + str(user_id_s))
                 if not os.path.exists(_dir):
                     os.mkdir(_dir)
