@@ -113,6 +113,10 @@
 							<input type="image" src="{% static 'images/mood5.png' %}" width="48" height="48" onclick="eventRenderer(5)" data-dismiss="modal">
 						</div>
 					</div>
+					<div class="row justify-content-center">
+						<label for="notatki">Notatki dnia:</label>
+						<input type="text" id="notatki" name="notatki">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -234,9 +238,34 @@
 				}
 				else
 				{
-					calendar.fullCalendar('unselect');
-					window.day = null;
-					return //TODO - edycja humorku
+					var allEvents = [];
+			    	allEvents = $('#calendar').fullCalendar('clientEvents');
+			    	var event = $.grep(allEvents, function (v) {
+			        return +v.start === +window.day;
+			    	});
+					$('#calendar').fullCalendar('removeEvents', event[0]._id)
+
+			    	var color_;
+					if(mood == 1)
+						color_ = 'red';
+					if(mood == 2)
+						color_ = 'orange'
+					if(mood == 3)
+						color_ = 'yellow'
+					if(mood == 4)
+						color_ = 'greenyellow'
+					if(mood == 5)
+						color_ = 'green'
+					calendar.fullCalendar('renderEvent',
+					{
+						title: "\n\n\n\n",
+						start: window.day,
+						end: window.day,
+						allDay: true,
+						backgroundColor: color_
+					},
+					true
+					);
 				}
 				calendar.fullCalendar('unselect');
 				window.day = null;
