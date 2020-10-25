@@ -313,12 +313,12 @@ def wykresy(request):
         static_path_to_chart = ('images/auto-generated-charts/user-' + str(user_id_s) + '/well_being@'
                                 + datetime.now().strftime("%m-%d-%Y_%H-%M-%S") + '@' + str(uuid.uuid1()) + '.png')
 
-        dir = os.path.join("D:/", "projects", "Django", "JakSieMasz", "main_page", "static", "images",
+        dir = os.path.join("/", "opt", "lampp", "htdocs", "main_page", "static", "images",
                            "auto-generated-charts", "user-" + str(user_id_s))
         if not os.path.exists(dir):
             os.mkdir(dir)
 
-        plt.savefig('d:/projects/Django/JakSieMasz/main_page/static/' + static_path_to_chart,
+        plt.savefig('/opt/lampp/htdocs/main_page/static/' + static_path_to_chart,
                     format="png")
 
         # static_path_to_chart = ('images/auto-generated-charts/user-2/'
