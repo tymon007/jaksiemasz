@@ -1,24 +1,17 @@
 {% extends 'general/index.html' %}
 
 {% block title %}<title>O nas</title>{% endblock %}
-{% block head %} <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> {% endblock %}
 
 {% block content %}
 <div class="content">
-    <div>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-    <div>
-        <ul>
-        Autorzy:
-        <li>Michał Brejnak</li>
-        <li>Jakub Piotrowicz</li>
-        <li>Tymon Kozanecki</li>
-        <li>Michaił Legczylin</li>
-        </ul>
-    </div>
+    <ul class="list-group" aria-label="Autorzy:">
+        <li class="list-group-item -a-bit-darker">Michał Brejnak</li>
+
+        <li class="list-group-item -a-bit-darker">Jakub Piotrowicz</li>
+
+        <li class="list-group-item -a-bit-darker">Tymon Kozanecki</li>
+
+        <li class="list-group-item -a-bit-darker">Michaił Legczylin</li>
+    </ul>
 </div>
 {% endblock %}

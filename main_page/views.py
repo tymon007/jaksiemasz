@@ -1,4 +1,5 @@
 import hashlib
+import json
 import random
 import re
 import string
@@ -12,6 +13,11 @@ from matplotlib import dates as mpl_dates
 from matplotlib import pyplot as plt
 
 from .models import User, Post
+
+from datetime import datetime
+import os
+
+from rich import print
 
 
 def md5(s, raw_output=False):
@@ -39,7 +45,9 @@ def main_page(request):
             'is_logged_key': True
         })
     else:
-        return redirect('log_out')
+        return render(request, 'main_page/not_login_index.html', context={
+            'is_logged_key': False
+        })
 
 
 def log_in(request):
@@ -165,7 +173,7 @@ def logout(request):
     # checking if user logged in
     request.session['is_logged'] = False
     request.session['id_user'] = False
-    return redirect('log_in')
+    return redirect('main_page')
 
 
 def me(request):
@@ -236,12 +244,46 @@ def Calendar(request):
         return redirect('log_out')
 
 
+def sendpostcal(request):
+    # checking if user logged in
+    is_logged = request.session.get('is_logged', False)
+    if is_logged:
+        if request.method == 'POST':
+            mood_data_list = json.loads(request.POST.get("mood-data"))
+
+            for elem in mood_data_list:
+                print(elem)
+                Post.objects.create(
+                    user_id=User.objects.get(id=request.session.get("id_user")),
+                    content=elem["text"],
+                    well_being=elem["mood"],  # "here should be well-being from form"
+                    food=5,  # "here should be I dunno even what and from where" 2020-09-27T22:00:00.000Z
+                    icon="icon.txt",
+                    date=datetime.strptime(elem["date"], '%Y-%m-%dT22:00:00.000Z')
+                )
+
+        return render(request, 'test.html', context={
+            'is_logged_key': True
+        })
+    else:
+        return redirect('log_out')
+
+
 def wykresy(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
 
     if is_logged:
         user_id_s = request.session.get('id_user', False)
+
+        # for i in range(0, 10):
+        #     Post.objects.create(
+        #         user_id = User.objects.get(id=user_id_s),
+        #         content = get_random_string(50),
+        #         well_being = random.randint(0, 5),
+        #         food = random.randint(0, 5),
+        #         icon = "icon.txt"
+        #     )
 
         posts = Post.objects.filter(user_id=user_id_s).order_by('date')
 
@@ -254,12 +296,13 @@ def wykresy(request):
             dates.append(post.date)
             well_being.append(post.well_being)
 
-        plt.plot_date(dates, well_being, linestyle='solid', linewidth="1", marker=".", color="blue")
+        plt.plot_date(dates, well_being, linestyle='solid', linewidth="2", marker="o", color='#4c96d7')
 
         plt.gcf().autofmt_xdate()
 
         date_format = mpl_dates.DateFormatter('%b, %d %Y')
         plt.gca().xaxis.set_major_formatter(date_format)
+        plt.gca().set_facecolor('#f8f9fa')
 
         plt.title("Wykres samopoczucia")
         plt.xlabel("Miesiąc")
@@ -267,14 +310,19 @@ def wykresy(request):
 
         plt.tight_layout()
 
-        # static_path_to_chart = ('images/auto-generated-charts/user-' + str(user_id_s) + '/well_being@'
-        #                         + datetime.now().strftime("%m-%d-%Y_%H-%M-%S") + '@' + str(uuid.uuid1()) + '.png')
-        #
-        # plt.savefig('d:/projects/Django/django_projects/skrrt/main_page/static/' + static_path_to_chart,
-        #             format="png")
+        static_path_to_chart = ('images/auto-generated-charts/user-' + str(user_id_s) + '/well_being@'
+                                + datetime.now().strftime("%m-%d-%Y_%H-%M-%S") + '@' + str(uuid.uuid1()) + '.png')
 
-        static_path_to_chart = ('images/auto-generated-charts/user-2/'
-                                'well_being@10-20-2020_11-05-17@5fba488e-12b3-11eb-8711-9828a61b3b5c.png')
+        dir = os.path.join("D:/", "projects", "Django", "JakSieMasz", "main_page", "static", "images",
+                           "auto-generated-charts", "user-" + str(user_id_s))
+        if not os.path.exists(dir):
+            os.mkdir(dir)
+
+        plt.savefig('d:/projects/Django/JakSieMasz/main_page/static/' + static_path_to_chart,
+                    format="png")
+
+        # static_path_to_chart = ('images/auto-generated-charts/user-2/'
+        #                         'well_being@10-20-2020_11-05-17@5fba488e-12b3-11eb-8711-9828a61b3b5c.png')
 
         return render(request, 'post-related-pages/wykresy.html', context={
             'is_logged_key': True,

@@ -15,5 +15,6 @@ urlpatterns = [
     re_path(r'^lekarze/$',            views.lekarze,            name="lekarze"),
     re_path(r'^wykresy/$',            views.wykresy,            name="wykresy"),
     re_path(r'^Calendar/$',           views.Calendar,           name="Calendar"),
+    re_path(r'^sendpostcal/$',        views.sendpostcal,        name="sendpostcal"),
     re_path(r'^.*$',                  views.http_not_found,     name="not_found")
 ]

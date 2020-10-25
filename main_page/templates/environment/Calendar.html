@@ -1,30 +1,28 @@
 {% extends 'general/index.html' %}
+
 {% load static %}
+
 {% block title %}<title>Calendar</title>{% endblock %}
 
-{% block head %}
-	<!-- FullCalendar -->
-	<link href='{% static "assets/css/fullcalendar.css" %}' rel='stylesheet' />
-	<link href='{% static "assets/css/fullcalendar.print.css" %}' rel='stylesheet' media='print' />
-	<script src='{% static "assets/js/jquery-1.10.2.js" %}' type="text/javascript"></script>
-	<script src='{% static "assets/js/jquery-ui.custom.min.js" %}' type="text/javascript"></script>
-	<script src='{% static "assets/js/fullcalendar.js" %}' type="text/javascript"></script>
+{% block style %}
+<!-- FullCalendar -->
+<link href='{% static "assets/css/fullcalendar.css" %}' rel='stylesheet' />
+<link href='{% static "assets/css/fullcalendar.print.css" %}' rel='stylesheet' media='print' />
+<style>
+    /* body {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 14px;
+        font-family: "Helvetica Nueue", Arial, Verdana, sans-serif;
+        background-color: #DDDDDD;
+    } */
 
-	<style>
-		body {
-			margin-top: 40px;
-			text-align: center;
-			font-size: 14px;
-			font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
-			background-color: #DDDDDD;
-			}
+    #wrap {
+        width: 1100px;
+        margin: 0 auto;
+    }
 
-		#wrap {
-			width: 1100px;
-			margin: 0 auto;
-			}
-
-	/*	#external-events {
+    /*	#external-events {
 			float: left;
 			width: 150px;
 			padding: 0 10px;
@@ -57,190 +55,275 @@
 			vertical-align: middle;
 			}
 	*/
-		#calendar {
-	        margin: 0 auto;
-			width: 900px;
-			background-color: #FFFFFF;
-			  border-radius: 6px;
-	        box-shadow: 0 1px 2px #C3C3C3;
-			}
-	</style>
+    #calendar {
+        margin: 0 auto;
+        width: 900px;
+        background-color: #FFFFFF;
+        border-radius: 6px;
+        box-shadow: 0 1px 2px #C3C3C3;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<!-- <script src='{% static "assets/js/jquery-1.10.2.js" %}' type="text/javascript"></script> -->
+<script src='{% static "assets/js/jquery-ui.custom.min.js" %}' type="text/javascript"></script>
+<script src='{% static "assets/js/fullcalendar.js" %}' type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-  	<!-- kalendarz -->
-  	<div id='wrap'>
-		<div id='calendar'></div>
-		<div style='clear:both'></div>
-	</div>
+<!-- kalendarz -->
+<div id='wrap'>
+    <div id='calendar'></div>
+    <div style='clear:both'></div>
+</div>
 
-  	<!-- Jak się masz -->
-  	<div class="my-3 container">
-		<div style="text-align: center;">
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#samopoczucieModal">
-				Jak się masz?
-			</button>
-		</div>
-	</div>
-	<!-- samopoczucieModal -->
-	<div class="modal" id="samopoczucieModal">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header"\>
-					<h3>Jak się masz?</h3>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col">
-							<input type="hidden" name="mood" value="1">
-							<input type="image" src="{% static 'images/mood1.png' %}" width="48" height="48" onclick="eventRenderer(1)" data-dismiss="modal">
-						</div>
-						<div class="col">
-							<input type="hidden" name="mood" value="2">
-							<input type="image" src="{% static 'images/mood2.png' %}" width="48" height="48" onclick="eventRenderer(2)" data-dismiss="modal">
-						</div>
-						<div class="col">
-							<input type="hidden" name="mood" value="3">
-							<input type="image" src="{% static 'images/mood3.png' %}" width="48" height="48" onclick="eventRenderer(3)" data-dismiss="modal">
-						</div>
-						<div class="col">
-							<input type="hidden" name="mood" value="4">
-							<input type="image" src="{% static 'images/mood4.png' %}" width="48" height="48" onclick="eventRenderer(4)" data-dismiss="modal">
-						</div>
-						<div class="col">
-							<input type="hidden" name="mood" value="5">
-							<input type="image" src="{% static 'images/mood5.png' %}" width="48" height="48" onclick="eventRenderer(5)" data-dismiss="modal">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-  		<script>
-//			$(document).ready(function() {
-			    var date = new Date();
-				var d = date.getDate();
-				var m = date.getMonth();
-				var y = date.getFullYear();
-				/*  className colors
-				className: default(transparent), important(red), chill(pink), success(green), info(blue)
-				*/
+<!-- Jak się masz -->
+<div class="my-3 container">
+    <div style="text-align: center;">
+        <button type="button" class="btn -a-bit-darker btn-lg" id="pseudo-send-data">
+            Jak się masz?
+        </button>
+    </div>
+</div>
 
-				/* initialize the external events
-				-----------------------------------------------------------------*/
-				$('#external-events div.external-event').each(
-					function()
-					{
+<!-- samopoczucieModal -->
+<div class="modal" id="samopoczucieModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content -a-bit-darker">
+            <div class="modal-header">
+                <h3>Jak się masz?</h3>
 
-						// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-						// it doesn't need to have a start or end
-						var eventObject = {
-							title: $.trim($(this).text()) // use the element's text as the event title
-						};
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-						// store the Event Object in the DOM element so we can get to it later
-						$(this).data('eventObject', eventObject);
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <input type="hidden" name="mood" value="1">
 
-						// make the event draggable using jQuery UI
-			/*			$(this).draggable({
-							zIndex: 999,
-							revert: true,      // will cause the event to go back to its
-							revertDuration: 0  //  original position after the drag
-						});
-			*/
-					}
-				);
-				/* initialize the calendar
-				-----------------------------------------------------------------*/
-				var calendar =  $('#calendar').fullCalendar({
-					header: {
-						left: 'title',
-						center: 'month',
-						right: 'prev,next today'
-					},
-					editable: false,
-					firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
-					selectable: true,
-					defaultView: 'month',
+                        <input type="image" src="{% static 'images/mood1.png' %}" width="48" height="48"
+                            onclick="eventRenderer(1)" data-dismiss="modal">
+                    </div>
 
-					axisFormat: 'h:mm',
-					columnFormat: {
-		                month: 'ddd',    // Mon
-		                week: 'ddd d', // Mon 7
-		                day: 'dddd M/d',  // Monday 9/7
-		                agendaDay: 'dddd d'
-		            },
-		            titleFormat: {
-		                month: 'MMMM yyyy', // September 2009
-		                week: "MMMM yyyy", // September 2009
-		                day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
-		            },
-					allDaySlot: true,
-					selectHelper: true,
-					select: function(start, end, allDay)
-					{
-						window.day = start;
-						$("#samopoczucieModal").modal();
-						return
-					}
-				});
-//			});
-			function IsDateHasEvent(date)
-			{
-			    var allEvents = [];
-			    allEvents = $('#calendar').fullCalendar('clientEvents');
-			    var event = $.grep(allEvents, function (v) {
-			        return +v.start === +date;
-			    });
-			    return event.length > 0;
-			}
-			function eventRenderer(mood)
-			{
-				if(mood === undefined || mood === null)
-				{
-					calendar.fullCalendar('unselect');
-					window.day = null;
-					return
-				}
-				if(window.day === undefined || window.day === null)
-				{
-					window.day = new Date();
-					window.day.setHours(0, 0, 0, 0);
-				}
-				if(!IsDateHasEvent(window.day))
-				{
-					var color_;
-					if(mood == 1)
-						color_ = 'red';
-					if(mood == 2)
-						color_ = 'orange'
-					if(mood == 3)
-						color_ = 'yellow'
-					if(mood == 4)
-						color_ = 'greenyellow'
-					if(mood == 5)
-						color_ = 'green'
-					calendar.fullCalendar('renderEvent',
-					{
-						title: "\n\n\n\n",
-						start: window.day,
-						end: window.day,
-						allDay: true,
-						backgroundColor: color_
-					},
-					true
-					);
-				}
-				else
-				{
-					calendar.fullCalendar('unselect');
-					window.day = null;
-					return //TODO - edycja humorku
-				}
-				calendar.fullCalendar('unselect');
-				window.day = null;
-				return
-			}
-		</script>
+                    <div class="col">
+                        <input type="hidden" name="mood" value="2">
+
+                        <input type="image" src="{% static 'images/mood2.png' %}" width="48" height="48"
+                            onclick="eventRenderer(2)" data-dismiss="modal">
+                    </div>
+
+                    <div class="col">
+                        <input type="hidden" name="mood" value="3">
+
+                        <input type="image" src="{% static 'images/mood3.png' %}" width="48" height="48"
+                            onclick="eventRenderer(3)" data-dismiss="modal">
+                    </div>
+
+                    <div class="col">
+                        <input type="hidden" name="mood" value="4">
+
+                        <input type="image" src="{% static 'images/mood4.png' %}" width="48" height="48"
+                            onclick="eventRenderer(4)" data-dismiss="modal">
+                    </div>
+
+                    <div class="col">
+                        <input type="hidden" name="mood" value="5">
+
+                        <input type="image" src="{% static 'images/mood5.png' %}" width="48" height="48"
+                            onclick="eventRenderer(5)" data-dismiss="modal">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <label for="notatki">Notatki dnia:</label>
+                    <input type="text" id="notatki" name="notatki">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="POST" id="data-to-send-form" action="{% url 'sendpostcal' %}" name="form">
+    {% csrf_token %}
+
+    <input type="submit" id="send-data" class="display-none">
+</form>
+
+<script>
+    var data = [];
+    var _CURR_UNIQ_ID;
+    //			$(document).ready(function() {
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    /*  className colors
+    className: default(transparent), important(red), chill(pink), success(green), info(blue)
+    */
+
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+    $('#external-events div.external-event').each(
+        function () {
+
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            };
+
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
+
+            // make the event draggable using jQuery UI
+            /*			$(this).draggable({
+                            zIndex: 999,
+                            revert: true,      // will cause the event to go back to its
+                            revertDuration: 0  //  original position after the drag
+                        });
+            */
+        }
+    );
+    /* initialize the calendar
+    -----------------------------------------------------------------*/
+    var calendar = $('#calendar').fullCalendar({
+        header: {
+            left: 'title',
+            center: 'month',
+            right: 'prev,next today'
+        },
+
+        editable: false,
+        firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+        selectable: true,
+        defaultView: 'month',
+
+        axisFormat: 'h:mm',
+
+        columnFormat: {
+            month: 'ddd',    // Mon
+            week: 'ddd d', // Mon 7
+            day: 'dddd M/d',  // Monday 9/7
+            agendaDay: 'dddd d'
+        },
+
+        titleFormat: {
+            month: 'MMMM yyyy', // September 2009
+            week: "MMMM yyyy", // September 2009
+            day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
+        },
+
+        allDaySlot: true,
+        selectHelper: true,
+
+        select: function (start, end, allDay) {
+            window.day = start;
+            var _uniq_id = 'id' + (new Date()).getTime();
+            data.push({
+                "unique_id": _uniq_id,
+                "mood": -1,
+                "date": window.day,
+                "text": null
+            });
+            _CURR_UNIQ_ID = _uniq_id;
+            $("#samopoczucieModal").modal();
+            return
+        }
+    });
+    //			});
+    function IsDateHasEvent(date) {
+        var allEvents = [];
+        allEvents = $('#calendar').fullCalendar('clientEvents');
+        var event = $.grep(allEvents, function (v) {
+            return +v.start === +date;
+        });
+        return event.length > 0;
+    }
+    function eventRenderer(mood) {
+        if (mood === undefined || mood === null) {
+            calendar.fullCalendar('unselect');
+            window.day = null;
+            return
+        }
+        if (window.day === undefined || window.day === null) {
+            window.day = new Date();
+            window.day.setHours(0, 0, 0, 0);
+        }
+        if (!IsDateHasEvent(window.day)) {
+            var color_;
+            if (mood == 1)
+                color_ = 'red';
+            if (mood == 2)
+                color_ = 'orange'
+            if (mood == 3)
+                color_ = 'yellow'
+            if (mood == 4)
+                color_ = 'greenyellow'
+            if (mood == 5)
+                color_ = 'green'
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].unique_id == _CURR_UNIQ_ID) {
+                    data[i].mood = mood;
+                    data[i].text = $("#notatki").val();
+                    $("#notatki").val("");
+                }
+            }
+
+            calendar.fullCalendar('renderEvent',
+                {
+                    title: "\n\n\n\n",
+                    start: window.day,
+                    end: window.day,
+                    allDay: true,
+                    backgroundColor: color_
+                },
+                true
+            );
+        }
+        else {
+            var allEvents = [];
+            allEvents = $('#calendar').fullCalendar('clientEvents');
+            var event = $.grep(allEvents, function (v) {
+                return +v.start === +window.day;
+            });
+            $('#calendar').fullCalendar('removeEvents', event[0]._id)
+
+            var color_;
+            if (mood == 1)
+                color_ = 'red';
+            if (mood == 2)
+                color_ = 'orange'
+            if (mood == 3)
+                color_ = 'yellow'
+            if (mood == 4)
+                color_ = 'greenyellow'
+            if (mood == 5)
+                color_ = 'green'
+            calendar.fullCalendar('renderEvent',
+                {
+                    title: "\n\n\n\n",
+                    start: window.day,
+                    end: window.day,
+                    allDay: true,
+                    backgroundColor: color_
+                },
+                true
+            );
+        }
+        calendar.fullCalendar('unselect');
+        window.day = null;
+        return
+    }
+
+    $("#pseudo-send-data").on("click", function () {
+        console.log(data)
+        console.log(JSON.stringify(data));
+
+        $("#data-to-send-form").append($('<input type="hidden" name="mood-data" value=\'' + JSON.stringify(data) + '\'>'))
+
+        $("#send-data").click();
+    })
+</script>
 {% endblock %}

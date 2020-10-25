@@ -1,23 +1,14 @@
 {% extends 'general/index.html' %}
 
 {% block title %}<title>Informacje o użytkowniku</title>{% endblock %}
-{% block head %} <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> {% endblock %}
 
 {% block content %}
 <div class="content">
-    <div class="alert alert-primary" style="font-size: 20px;">
+    <div class="alert -a-bit-darker" style="font-size: 1.25rem">
         {% if user %}
-        <br>
         <p>Nazwa użytkownika: {{ user.username }}</p>
-        <br>
-        <hr>
-        <br>
+
         <p>E-mail: {{ user.email }}</p>
-        <br>
-        <hr>
-        <br>
-        <p>(placeholder)</p>
-        <br>
         {% endif %}
     </div>
 </div>
