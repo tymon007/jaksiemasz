@@ -6,8 +6,9 @@
 
 {% block style %}
 <!-- FullCalendar -->
-<link href='{% static "assets/css/fullcalendar.css" %}' rel='stylesheet' />
-<link href='{% static "assets/css/fullcalendar.print.css" %}' rel='stylesheet' media='print' />
+<link href='{% static "assets/css/fullcalendar.css" %}' rel='stylesheet'/>
+<link href='{% static "assets/css/fullcalendar.print.css" %}' rel='stylesheet' media='print'/>
+<link href="{% static 'css/porady.css' %}" rel="stylesheet">
 <style>
     /* body {
         margin-top: 40px;
@@ -18,7 +19,7 @@
     } */
 
     #wrap {
-        width: 1100px;
+        /* width: 1100px; */
         margin: 0 auto;
     }
 
@@ -62,6 +63,8 @@
         border-radius: 6px;
         box-shadow: 0 1px 2px #C3C3C3;
     }
+
+
 </style>
 {% endblock %}
 
@@ -74,15 +77,15 @@
 {% block content %}
 <!-- kalendarz -->
 <div id='wrap'>
-    <div id='calendar'></div>
-    <div style='clear:both'></div>
+    <div id='calendar' style="width: 90%"></div>
+    <div style='clear:both' class="-a-bit-darker"></div>
 </div>
 
 <!-- Jak się masz -->
 <div class="my-3 container">
     <div style="text-align: center;">
         <button type="button" class="btn -a-bit-darker btn-lg" id="pseudo-send-data">
-            Jak się masz?
+            Wyślij posty!
         </button>
     </div>
 </div>
@@ -103,41 +106,43 @@
                         <input type="hidden" name="mood" value="1">
 
                         <input type="image" src="{% static 'images/mood1.png' %}" width="48" height="48"
-                            onclick="eventRenderer(1)" data-dismiss="modal">
+                               onclick="eventRenderer(1)" data-dismiss="modal">
                     </div>
 
                     <div class="col">
                         <input type="hidden" name="mood" value="2">
 
                         <input type="image" src="{% static 'images/mood2.png' %}" width="48" height="48"
-                            onclick="eventRenderer(2)" data-dismiss="modal">
+                               onclick="eventRenderer(2)" data-dismiss="modal">
                     </div>
 
                     <div class="col">
                         <input type="hidden" name="mood" value="3">
 
                         <input type="image" src="{% static 'images/mood3.png' %}" width="48" height="48"
-                            onclick="eventRenderer(3)" data-dismiss="modal">
+                               onclick="eventRenderer(3)" data-dismiss="modal">
                     </div>
 
                     <div class="col">
                         <input type="hidden" name="mood" value="4">
 
                         <input type="image" src="{% static 'images/mood4.png' %}" width="48" height="48"
-                            onclick="eventRenderer(4)" data-dismiss="modal">
+                               onclick="eventRenderer(4)" data-dismiss="modal">
                     </div>
 
                     <div class="col">
                         <input type="hidden" name="mood" value="5">
 
                         <input type="image" src="{% static 'images/mood5.png' %}" width="48" height="48"
-                            onclick="eventRenderer(5)" data-dismiss="modal">
+                               onclick="eventRenderer(5)" data-dismiss="modal">
                     </div>
                 </div>
 
                 <div class="row justify-content-center">
-                    <label for="notatki">Notatki dnia:</label>
-                    <input type="text" id="notatki" name="notatki">
+                    <div class="form-group">
+                        <label for="notatki">Notatki dnia:</label>
+                        <textarea class="form-control" id="notatki" rows="8" cols="35" name="notatki"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -219,14 +224,13 @@
 
         select: function (start, end, allDay) {
             window.day = start;
-            var _uniq_id = 'id' + (new Date()).getTime();
+            _CURR_UNIQ_ID = 'id' + (new Date()).getTime();
             data.push({
-                "unique_id": _uniq_id,
+                "unique_id": _CURR_UNIQ_ID,
                 "mood": -1,
-                "date": window.day,
+                "date": Date.parse(new Date(window.day)),
                 "text": null
             });
-            _CURR_UNIQ_ID = _uniq_id;
             $("#samopoczucieModal").modal();
             return
         }
@@ -301,6 +305,15 @@
                 color_ = 'greenyellow'
             if (mood == 5)
                 color_ = 'green'
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].unique_id == _CURR_UNIQ_ID) {
+                    data[i].mood = mood;
+                    data[i].text = $("#notatki").val();
+                    $("#notatki").val("");
+                }
+            }
+
             calendar.fullCalendar('renderEvent',
                 {
                     title: "\n\n\n\n",
@@ -325,5 +338,7 @@
 
         $("#send-data").click();
     })
+
+
 </script>
 {% endblock %}

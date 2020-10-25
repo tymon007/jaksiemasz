@@ -4,6 +4,8 @@ import random
 import re
 import string
 import uuid
+from django.utils import timezone
+import pytz
 
 import matplotlib
 from django.shortcuts import render, redirect
@@ -15,6 +17,7 @@ from matplotlib import pyplot as plt
 from .models import User, Post
 
 from datetime import datetime
+import time
 import os
 
 from rich import print
@@ -247,24 +250,69 @@ def Calendar(request):
 def sendpostcal(request):
     # checking if user logged in
     is_logged = request.session.get('is_logged', False)
+
     if is_logged:
         if request.method == 'POST':
+            user_id_s = request.session.get('id_user', False)
+
             mood_data_list = json.loads(request.POST.get("mood-data"))
+            print(mood_data_list)
 
-            for elem in mood_data_list:
-                print(elem)
-                Post.objects.create(
-                    user_id=User.objects.get(id=request.session.get("id_user")),
-                    content=elem["text"],
-                    well_being=elem["mood"],  # "here should be well-being from form"
-                    food=5,  # "here should be I dunno even what and from where" 2020-09-27T22:00:00.000Z
-                    icon="icon.txt",
-                    date=datetime.strptime(elem["date"], '%Y-%m-%dT22:00:00.000Z')
-                )
+            if len(mood_data_list) != 0:
+                for elem in mood_data_list:
+                    # datew = date.fromtimestamp(int(elem["date"]))
+                    timestamp = elem["date"]
+                    dt_object = datetime.fromtimestamp(timestamp / 1000)
 
-        return render(request, 'test.html', context={
-            'is_logged_key': True
-        })
+                    Post.objects.create(
+                        user_id=User.objects.get(id=user_id_s),
+                        content=elem["text"],
+                        well_being=elem["mood"],  # "here should be well-being from form"
+                        food=5,  # "here should be I dunno even what and from where" 2020-09-27T22:00:00.000Z
+                        icon="icon.txt",
+                        date=dt_object
+                    )
+
+                posts = Post.objects.filter(user_id=user_id_s).order_by('date')
+
+                plt.style.use('fivethirtyeight')
+
+                dates = []
+                well_being = []
+
+                for post in posts:
+                    dates.append(post.date)
+                    well_being.append(post.well_being)
+
+                plt.plot_date(dates, well_being, linestyle='solid', linewidth="2", marker="o", color='#4c96d7')
+
+                plt.gcf().autofmt_xdate()
+
+                date_format = mpl_dates.DateFormatter('%b, %d %Y')
+                plt.gca().xaxis.set_major_formatter(date_format)
+                plt.gca().set_facecolor('#f8f9fa')
+
+                plt.title("Wykres samopoczucia")
+                plt.xlabel("Miesiąc")
+                plt.ylabel("Samopoczucie")
+
+                plt.tight_layout()
+
+                dir = os.path.join("/", "opt", "lampp", "htdocs", "main_page", "static", "images",
+                           "auto-generated-charts", "user-" + str(user_id_s))
+                if not os.path.exists(_dir):
+                    os.mkdir(_dir)
+
+                plt.savefig(
+                    '/opt/lampp/htdocs/main_page/static/images/auto-generated-charts/user-'
+                    + str(user_id_s) + '/last_well_being.png',
+                    format="png")
+            else:
+                pass
+        else:
+            pass
+
+        return redirect('wykresy')
     else:
         return redirect('log_out')
 
@@ -274,60 +322,13 @@ def wykresy(request):
     is_logged = request.session.get('is_logged', False)
 
     if is_logged:
-        user_id_s = request.session.get('id_user', False)
-
-        # for i in range(0, 10):
-        #     Post.objects.create(
-        #         user_id = User.objects.get(id=user_id_s),
-        #         content = get_random_string(50),
-        #         well_being = random.randint(0, 5),
-        #         food = random.randint(0, 5),
-        #         icon = "icon.txt"
-        #     )
-
+        user_id_s = request.session.get("id_user", False)
         posts = Post.objects.filter(user_id=user_id_s).order_by('date')
-
-        plt.style.use('fivethirtyeight')
-
-        dates = []
-        well_being = []
-
-        for post in posts:
-            dates.append(post.date)
-            well_being.append(post.well_being)
-
-        plt.plot_date(dates, well_being, linestyle='solid', linewidth="2", marker="o", color='#4c96d7')
-
-        plt.gcf().autofmt_xdate()
-
-        date_format = mpl_dates.DateFormatter('%b, %d %Y')
-        plt.gca().xaxis.set_major_formatter(date_format)
-        plt.gca().set_facecolor('#f8f9fa')
-
-        plt.title("Wykres samopoczucia")
-        plt.xlabel("Miesiąc")
-        plt.ylabel("Samopoczucie")
-
-        plt.tight_layout()
-
-        static_path_to_chart = ('images/auto-generated-charts/user-' + str(user_id_s) + '/well_being@'
-                                + datetime.now().strftime("%m-%d-%Y_%H-%M-%S") + '@' + str(uuid.uuid1()) + '.png')
-
-        dir = os.path.join("/", "opt", "lampp", "htdocs", "main_page", "static", "images",
-                           "auto-generated-charts", "user-" + str(user_id_s))
-        if not os.path.exists(dir):
-            os.mkdir(dir)
-
-        plt.savefig('/opt/lampp/htdocs/main_page/static/' + static_path_to_chart,
-                    format="png")
-
-        # static_path_to_chart = ('images/auto-generated-charts/user-2/'
-        #                         'well_being@10-20-2020_11-05-17@5fba488e-12b3-11eb-8711-9828a61b3b5c.png')
 
         return render(request, 'post-related-pages/wykresy.html', context={
             'is_logged_key': True,
             'posts': posts,
-            'static_chart_name': static_path_to_chart
+            'static_chart_name': 'images/auto-generated-charts/user-' + str(user_id_s) + '/last_well_being.png'
         })
     else:
         return redirect('log_out')

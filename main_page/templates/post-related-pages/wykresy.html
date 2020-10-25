@@ -6,23 +6,27 @@
 
 {% block content %}
 <div class="content">
+    <img src="{% static static_chart_name %}" class="mb-3" style="display: block; margin: 0 auto" width="300px">
+
     {% for post in posts %}
-    <p>
-    <h1>Post #{{ post.id }}</h1>
-    <p>Post Id: <strong>{{ post.id }}</strong></p>
-    <p>Post User Id: <strong>{{ post.user_id }}</strong></p>
-    <p style="word-wrap: break-word">Post Content: <strong>{{ post.content }}</strong></p>
-    <p>Post Well-Being: <strong>{{ post.well_being }}</strong></p>
-    <p>Post Food: <strong>{{ post.food }}</strong></p>
-    <p>Post Date: <strong>{{ post.date }}</strong></p>
-    <p>Post Icon: <strong>{{ post.icon }}</strong></p>
-    </p>
+    <div class="alert alert-dark" role="alert">
+        <h4 class="alert-heading">{{ post.date }}</h4>
+        <p>{{ post.content }}</p>
+        <hr>
+        <p class="mb-0">Samopoczucie:
+            {% if post.well_being == 1 %}
+            <img src="{% static 'images/mood1.png' %}" width="50px">
+            {% elif post.well_being == 2 %}
+            <img src="{% static 'images/mood2.png' %}" width="50px">
+            {% elif post.well_being == 3 %}
+            <img src="{% static 'images/mood3.png' %}" width="50px">
+            {% elif post.well_being == 4 %}
+            <img src="{% static 'images/mood4.png' %}" width="50px">
+            {% elif post.well_being == 5 %}
+            <img src="{% static 'images/mood5.png' %}" width="50px">
+            {% endif %}
+        </p>
+    </div>
     {% endfor %}
-
-    {{ user_id }}
-
-    {{ chart_name }}
-
-    <img src="{% static static_chart_name %}" style="display: block; margin: 0 auto" width="300px">
 </div>
 {% endblock %}
